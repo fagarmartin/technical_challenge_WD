@@ -16,7 +16,10 @@ function Home() {
       setIsLoading(true);
       const response = await getPhonesService();
       setAllPhones(response.data);
-      setIsLoading(false);
+      setTimeout(() => {
+        // loading from server simulation
+        setIsLoading(false);
+      }, 1500);
     } catch (error) {
       navigate("/error");
     }
@@ -24,11 +27,13 @@ function Home() {
 
   const getDataDetails = async () => {
     try {
-      setIsLoading(true);
+      setIsLoadingDetails(true);
       const response = await getPhoneDetails(selectedPhone);
-
       setFoundPhone(response.data);
-      setIsLoading(false);
+      setTimeout(() => {
+        // loading from server simulation
+        setIsLoadingDetails(false);
+      }, 2000);
     } catch (error) {
       navigate(error);
     }
@@ -58,10 +63,9 @@ function Home() {
         <div className="phones-container">
           {allPhones.map((eachPhone) => {
             return (
-              <div className="card"  key={eachPhone.id}>
+              <div className="card" key={eachPhone.id}>
                 <Link
                   to={"#phone-details"}
-                 
                   onClick={() => {
                     handleSelectedPhone(eachPhone.id);
                   }}
@@ -80,10 +84,12 @@ function Home() {
           })}
         </div>
       </div>
-      {isLoadingDetails&& <div className="center-container">
-        <BounceLoader color={"green"} />
-      </div>}
-      {(foundPhone && !isLoadingDetails) && (
+      {isLoadingDetails && (
+        <div className="center-container">
+          <BounceLoader color={"green"} />
+        </div>
+      )}
+      {foundPhone && !isLoadingDetails && (
         <div className="phone-details">
           <h1>{foundPhone.name}</h1>
           <h2>{foundPhone.manufacturer}</h2>
