@@ -12,7 +12,7 @@ function PhoneDetails() {
     try {
       setIsLoading(true);
       const response = await getPhoneDetails(params.id);
-      console.log(response.data)
+      console.log(response.data);
       setfoundPhone(response.data);
       setIsLoading(false);
     } catch (error) {
@@ -31,15 +31,34 @@ function PhoneDetails() {
     );
   }
 
-  return <div>
-
-    <h2>{foundPhone.name}</h2>
-    <h3>{foundPhone.manufacturer}</h3>
-    <h5>Color:{foundPhone.color}</h5>
-    <p>Description:{foundPhone.description}</p>
-
-
-  </div>;
+  return (
+    <div>
+      <h1>{foundPhone.name}</h1>
+      <h2>{foundPhone.manufacturer}</h2>
+      <div className="center-container details">
+      <div className="img-phone-details">
+        <img
+          src={`../images/${foundPhone.imageFileName}`}
+          alt={foundPhone.name}
+        />
+        </div>
+        <div className="phone-info">
+          <h5>Color:</h5>
+          <p>{foundPhone.color}</p>
+          <h5>Description:</h5>
+          <p>{foundPhone.description}</p>
+          <h5>Price:</h5>
+          <p>{foundPhone.price}</p>
+          <h5>Processor:</h5>
+          <p>{foundPhone.processor}</p>
+          <h5>Ram:</h5>
+          <p>{foundPhone.ram}</p>
+          <h5>Screen:</h5>
+          <p>{foundPhone.screen}</p>
+        </div>
+      </div>
+    </div>
+  );
 }
 
 export default PhoneDetails;

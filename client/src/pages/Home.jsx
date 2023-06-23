@@ -31,17 +31,28 @@ function Home() {
     );
   }
 
-  return <div>
-{allPhones.map((eachPhone)=>{
-    return (
-        <Link className="card" key={eachPhone.id} to={`/phones/${eachPhone.id}`}><li><h3>{eachPhone.name}</h3>
-        <h5>{eachPhone.manufacturer}</h5>
-        <img src={`./images/${eachPhone.imageFileName}`} alt={eachPhone.name}/>
-        </li></Link>
-    )
-})}
-
-  </div>;
+  return (
+    <div className="phones-container">
+      {allPhones.map((eachPhone) => {
+        return (
+          <Link
+            className="card"
+            key={eachPhone.id}
+            to={`/phones/${eachPhone.id}`}
+          >
+            <li>
+              <h3>{eachPhone.name}</h3>
+              <h5>{eachPhone.manufacturer}</h5>
+              <img
+                src={`./images/${eachPhone.imageFileName}`}
+                alt={eachPhone.name}
+              />
+            </li>
+          </Link>
+        );
+      })}
+    </div>
+  );
 }
 
 export default Home;

@@ -1,31 +1,48 @@
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
-h3,h4,h5{
+h3,
+h4,
+h5 {
   margin: 0;
 }
-.center-container{
+.center-container {
   display: flex;
   justify-content: center;
+  align-items: center;
 }
-li{
+li {
   list-style: none;
-  
 }
-a{
+a {
   text-decoration: none;
-  color:darkgreen;
+  color: darkgreen;
 }
-.card img{
-  height: 120px;
+.card img {
+  height: 200px;
+}
+.phones-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.img-phone-details img{
+  height: 500px;
+}
+.details{
+  text-align: left;
+}
+.phone-info{
+  width: 30%;
 }
