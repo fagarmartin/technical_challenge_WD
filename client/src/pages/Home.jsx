@@ -10,6 +10,7 @@ function Home() {
   const [foundPhone, setFoundPhone] = useState();
   const [isLoadingDetails, setIsLoadingDetails] = useState(false);
   const [selectedPhone, setSelectedPhone] = useState();
+
   const getData = async () => {
     try {
       setIsLoading(true);
@@ -79,7 +80,10 @@ function Home() {
           })}
         </div>
       </div>
-      {foundPhone && (
+      {isLoadingDetails&& <div className="center-container">
+        <BounceLoader color={"green"} />
+      </div>}
+      {(foundPhone && !isLoadingDetails) && (
         <div className="phone-details">
           <h1>{foundPhone.name}</h1>
           <h2>{foundPhone.manufacturer}</h2>
