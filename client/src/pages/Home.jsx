@@ -35,8 +35,9 @@ function Home() {
     <div className="phones-container">
       {allPhones.map((eachPhone) => {
         return (
+          <div className="card">
           <Link
-            className="card"
+           
             key={eachPhone.id}
             to={`/phones/${eachPhone.id}`}
           >
@@ -49,6 +50,7 @@ function Home() {
               />
             </li>
           </Link>
+          </div>
         );
       })}
     </div>
