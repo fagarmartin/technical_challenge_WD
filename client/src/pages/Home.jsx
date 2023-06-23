@@ -10,6 +10,7 @@ function Home() {
   const [foundPhone, setFoundPhone] = useState();
   const [isLoadingDetails, setIsLoadingDetails] = useState(false);
   const [selectedPhone, setSelectedPhone] = useState();
+  const [isShowing,setIsShowing]=useState(false)
   const myRef = useRef(null);
 
   const executeScroll = () => myRef.current.scrollIntoView({ // autoscroll a los detalles
@@ -20,12 +21,13 @@ function Home() {
 
   const getData = async () => {
     try {
-      setIsLoading(true);
+      setIsLoading(true);     
       const response = await getPhonesService();
       setAllPhones(response.data);
       setTimeout(() => {
         // loading from server simulation
         setIsLoading(false);
+        
       }, 1500);
     } catch (error) {
       navigate("/error");
@@ -35,6 +37,7 @@ function Home() {
   const getDataDetails = async () => {
     try {
       setIsLoadingDetails(true);
+      
       const response = await getPhoneDetails(selectedPhone);
       setFoundPhone(response.data);
       setTimeout(() => {
@@ -46,9 +49,14 @@ function Home() {
     }
   };
   const handleSelectedPhone = (id) => {
+    setIsShowing(true)
     setSelectedPhone(id);
     executeScroll();
   };
+  const handleClose =()=>{
+    setSelectedPhone(undefined)
+    setIsShowing(false)
+  }
 
   useEffect(() => {
     getData();
@@ -69,14 +77,15 @@ function Home() {
   return (
     <div>
       <div ref={myRef}>
-        {isLoadingDetails && (
+        {(isLoadingDetails && isShowing) && (
           <div className="center-container">
             <BounceLoader color={"green"} />
           </div>
         )}
 
-        {foundPhone && !isLoadingDetails && (
+        {(foundPhone && !isLoadingDetails) && (
           <div className="phone-details">
+          <button onClick={handleClose} >X</button>
             <h1>{foundPhone.name}</h1>
             <h2>{foundPhone.manufacturer}</h2>
             <div className="center-container details">
@@ -108,7 +117,8 @@ function Home() {
         <div className="phones-container">
           {allPhones.map((eachPhone) => {
             return (
-              <div className="card" key={eachPhone.id}>
+              <div className="card" key={eachPhone.id}> 
+              
                 <Link
                   to="#goto-details"
                   onClick={() => {

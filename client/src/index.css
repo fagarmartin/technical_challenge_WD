@@ -67,3 +67,10 @@ nav a{
   color:white;
   font-weight: bold;
 }
+button{
+  background-color: lightgray;
+  color:gray;
+  border:none;
+  padding: 5px 10px;
+  border-radius: 5px;
+}
