@@ -1,13 +1,15 @@
 import { useEffect, useState } from "react";
 import BounceLoader from "react-spinners/BounceLoader";
-import { getPhonesService } from "../services/phones.services";
+import { getPhonesService, getPhoneDetails } from "../services/phones.services";
 import { Link, useNavigate } from "react-router-dom";
 
 function Home() {
   const navigate = useNavigate();
   const [allPhones, setAllPhones] = useState();
   const [isLoading, setIsLoading] = useState(true);
-
+  const [foundPhone, setFoundPhone] = useState();
+  const [isLoadingDetails, setIsLoadingDetails] = useState(false);
+  const [selectedPhone, setSelectedPhone] = useState();
   const getData = async () => {
     try {
       setIsLoading(true);
@@ -17,6 +19,21 @@ function Home() {
     } catch (error) {
       navigate("/error");
     }
+  };
+
+  const getDataDetails = async () => {
+    try {
+      setIsLoading(true);
+      const response = await getPhoneDetails(selectedPhone);
+      setFoundPhone(response.data);
+      setIsLoading(false);
+    } catch (error) {
+      navigate(error);
+    }
+  };
+  const handleSelectedPhone = (id) => {
+    setSelectedPhone(id);
+    getDataDetails();
   };
 
   useEffect(() => {
@@ -32,27 +49,58 @@ function Home() {
   }
 
   return (
-    <div className="phones-container">
-      {allPhones.map((eachPhone) => {
-        return (
-          <div className="card">
-          <Link
-           
-            key={eachPhone.id}
-            to={`/phones/${eachPhone.id}`}
-          >
-            <li>
-              <h3>{eachPhone.name}</h3>
-              <h5>{eachPhone.manufacturer}</h5>
+    <div>
+      <div className="phones-container">
+        {allPhones.map((eachPhone) => {
+          return (
+            <div className="card">
+              <Link
+                key={eachPhone.id}
+                onClick={() => {
+                  handleSelectedPhone(eachPhone.id);
+                }}
+              >
+                <li>
+                  <h3>{eachPhone.name}</h3>
+                  <h5>{eachPhone.manufacturer}</h5>
+                  <img
+                    src={`./images/${eachPhone.imageFileName}`}
+                    alt={eachPhone.name}
+                  />
+                </li>
+              </Link>
+            </div>
+          );
+        })}
+      </div>
+      {foundPhone && (
+        <div className="phone-details">
+          <h1>{foundPhone.name}</h1>
+          <h2>{foundPhone.manufacturer}</h2>
+          <div className="center-container details">
+            <div className="img-phone-details">
               <img
-                src={`./images/${eachPhone.imageFileName}`}
-                alt={eachPhone.name}
+                src={`../images/${foundPhone.imageFileName}`}
+                alt={foundPhone.name}
               />
-            </li>
-          </Link>
+            </div>
+            <div className="phone-info">
+              <h5>Color:</h5>
+              <p>{foundPhone.color}</p>
+              <h5>Description:</h5>
+              <p>{foundPhone.description}</p>
+              <h5>Price:</h5>
+              <p>{foundPhone.price}</p>
+              <h5>Processor:</h5>
+              <p>{foundPhone.processor}</p>
+              <h5>Ram:</h5>
+              <p>{foundPhone.ram}</p>
+              <h5>Screen:</h5>
+              <p>{foundPhone.screen}</p>
+            </div>
           </div>
-        );
-      })}
+        </div>
+      )}
     </div>
   );
 }
